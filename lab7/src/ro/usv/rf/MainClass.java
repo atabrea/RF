@@ -1,7 +1,7 @@
-package usv;
+package ro.usv.rf;
 
-import ro.usv.rf.FileUtils;
-import ro.usv.rf.USVInputFileCustomException;
+import java.util.List;
+import java.util.Map;
 
 public class MainClass {
 	
@@ -14,12 +14,11 @@ public class MainClass {
 			int numberOfFeatures = learningSet[0].length;
 			System.out.println(String.format("The learning set has %s patters and %s features", numberOfPatterns, numberOfFeatures));
 			System.out.println("Learning set: ");
-			for (double[] line : learningSet) {
-				for (double element : line) {
-					System.out.print(element + " ");
-				}
-				System.out.println();
-			}
+			Map<Integer, List<double[]>> groupClass = DistanceUtils.groupClass(learningSet);
+			double[][] wMatrix = DistanceUtils.calculateWMatrix(groupClass);
+			
+			double[] element = {1,1,2,1,1};
+			System.out.println(DistanceUtils.findClass(element, wMatrix));
 			
 		} catch (USVInputFileCustomException e) {
 			System.out.println(e.getMessage());

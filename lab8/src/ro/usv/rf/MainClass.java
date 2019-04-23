@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.Set;
 
 public class MainClass {
 
@@ -88,6 +89,15 @@ public class MainClass {
 			
 			FileUtils.writeLearningSetToFile("eval.txt", evaluationSet);
 			FileUtils.writeLearningSetToFile("train.txt", trainingSet);
+			
+			ArrayList<Set<Distance>> distanceArray = Algorithm.generateDistanceArray(evaluationSet, trainingSet);
+			
+			int k[] = {1,3,5,7,9,11,13,15, 50, 70, 90};
+			for (int i : k) {
+				System.out.println("Pentru k = " + i + " accuratetea:");
+				Algorithm.applyKnn(i, distanceArray, trainingSet);
+			}
+			
 			
 		} catch (USVInputFileCustomException e) {
 			e.printStackTrace();
